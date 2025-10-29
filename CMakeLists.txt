@@ -25,7 +25,23 @@ FetchContent_Declare(
 set(FTXUI_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(FTXUI_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 
-FetchContent_MakeAvailable(wren ftxui)
+FetchContent_MakeAvailable(ftxui)
+FetchContent_GetProperties(wren)
+if(NOT wren_POPULATED)
+    FetchContent_Populate(wren)
+endif()
+
+# Build Wren as a static library
+file(GLOB WREN_SOURCES 
+    ${wren_SOURCE_DIR}/src/vm/*.c
+    ${wren_SOURCE_DIR}/src/optional/*.c
+)
+add_library(wren STATIC ${WREN_SOURCES})
+target_include_directories(wren PUBLIC 
+    ${wren_SOURCE_DIR}/src/include
+    ${wren_SOURCE_DIR}/src/vm
+    ${wren_SOURCE_DIR}/src/optional
+)
 
 # Wrenbugger executable
 add_executable(wrenbugger
