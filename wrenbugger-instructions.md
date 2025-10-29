@@ -891,6 +891,8 @@ cmake --build .
 - FTXUI will use your terminal's color scheme automatically
 - The 8x8 display uses block characters (█) for pixels
 - Output log auto-scrolls to show recent lines
+- ALL files small caps
+- All commit messages start with descriptive emoji
 
 ## Implementation Checklist
 
