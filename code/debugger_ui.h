@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ftxui/component/component.hpp>
+#include <ftxui/component/screen_interactive.hpp>
 #include <memory>
 
 class wren_interface;
@@ -19,13 +20,9 @@ private:
     ftxui::Component create_source_view();
     ftxui::Component create_variables_view();
     ftxui::Component create_callstack_view();
-    ftxui::Component create_controls();
+    ftxui::Component create_info_view();
     
     void update_display();
-    void handle_continue();
-    void handle_step_over();
-    void handle_step_into();
-    void handle_step_out();
 
     std::shared_ptr<wren_interface> wren_;
     ftxui::ScreenInteractive screen_;

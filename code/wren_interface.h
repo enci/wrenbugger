@@ -1,9 +1,13 @@
 #pragma once
 
+extern "C" {
 #include "wren.h"
-#include "wren_debugger.h"
+}
 #include <string>
 #include <vector>
+
+// Forward declare internal type
+struct WrenVM;
 
 // Interface to wrap Wren VM and debugger functionality
 class wren_interface {
@@ -14,19 +18,11 @@ public:
     // Initialize VM with a script file
     bool load_script(const std::string& filename);
     
-    // Debugger controls
-    void continue_execution();
-    void step_over();
-    void step_into();
-    void step_out();
-    void add_breakpoint(const std::string& module, int line);
-    void remove_breakpoint(int id);
-    
     // Query current state
-    bool is_halted() const;
     std::string get_current_line() const;
     std::vector<std::string> get_callstack() const;
     std::vector<std::string> get_variables() const;
+    std::string get_script_content() const;
     
 private:
     WrenVM* vm_;

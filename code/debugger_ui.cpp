@@ -3,6 +3,7 @@
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
+#include <sstream>
 
 using namespace ftxui;
 
@@ -15,13 +16,31 @@ debugger_ui::~debugger_ui() {
 
 Component debugger_ui::create_source_view() {
     auto renderer = Renderer([&] {
-        return window(text("Source Code") | bold,
-            vbox({
-                text("// Source code view"),
-                text(wren_->get_current_line()),
-                text("// Line numbers and code will appear here"),
-            }) | border
-        );
+        // Split script content into lines
+        std::string content = wren_->get_script_content();
+        std::vector<std::string> lines;
+        std::istringstream stream(content);
+        std::string line;
+        int line_num = 1;
+        
+        Elements line_elements;
+        while (std::getline(stream, line)) {
+            line_elements.push_back(
+                hbox({
+                    text(std::to_string(line_num) + ": ") | dim,
+                    text(line)
+                })
+            );
+            line_num++;
+        }
+        
+        if (line_elements.empty()) {
+            line_elements.push_back(text("No source loaded") | dim);
+        }
+        
+        return window(text("📄 Source Code") | bold,
+            vbox(line_elements) | vscroll_indicator | yframe | flex
+        ) | flex;
     });
     return renderer;
 }
@@ -31,11 +50,11 @@ Component debugger_ui::create_variables_view() {
         auto vars = wren_->get_variables();
         Elements var_elements;
         for (const auto& var : vars) {
-            var_elements.push_back(text(var));
+            var_elements.push_back(text("  " + var));
         }
         
-        return window(text("Variables") | bold,
-            vbox(var_elements) | border
+        return window(text("🔍 Variables") | bold,
+            vbox(var_elements) | yframe
         );
     });
     return renderer;
@@ -45,44 +64,38 @@ Component debugger_ui::create_callstack_view() {
     auto renderer = Renderer([&] {
         auto stack = wren_->get_callstack();
         Elements stack_elements;
+        int frame_num = 0;
         for (const auto& frame : stack) {
-            stack_elements.push_back(text(frame));
+            stack_elements.push_back(
+                text("  #" + std::to_string(frame_num) + " " + frame)
+            );
+            frame_num++;
         }
         
-        return window(text("Call Stack") | bold,
-            vbox(stack_elements) | border
+        return window(text("📚 Call Stack") | bold,
+            vbox(stack_elements) | yframe
         );
     });
     return renderer;
 }
 
-Component debugger_ui::create_controls() {
-    auto continue_btn = Button("Continue (F5)", [&] { handle_continue(); });
-    auto step_over_btn = Button("Step Over (F10)", [&] { handle_step_over(); });
-    auto step_into_btn = Button("Step Into (F11)", [&] { handle_step_into(); });
-    auto step_out_btn = Button("Step Out (F12)", [&] { handle_step_out(); });
+Component debugger_ui::create_info_view() {
     auto quit_btn = Button("Quit (Q)", [&] { screen_.ExitLoopClosure()(); });
     
-    auto buttons = Container::Horizontal({
-        continue_btn,
-        step_over_btn,
-        step_into_btn,
-        step_out_btn,
-        quit_btn,
-    });
-    
-    auto renderer = Renderer(buttons, [&] {
-        return window(text("Controls") | bold,
-            hbox({
-                continue_btn->Render() | border,
+    auto renderer = Renderer(quit_btn, [&] {
+        return window(text("ℹ️  Info") | bold,
+            vbox({
+                text("Wrenbugger - Terminal Debugger for Wren") | bold,
                 separator(),
-                step_over_btn->Render() | border,
+                text(wren_->get_current_line()),
                 separator(),
-                step_into_btn->Render() | border,
+                hbox({
+                    text("Press "),
+                    text("Q") | bold,
+                    text(" to quit")
+                }),
                 separator(),
-                step_out_btn->Render() | border,
-                separator(),
-                quit_btn->Render() | border,
+                quit_btn->Render() | center
             })
         );
     });
@@ -94,50 +107,39 @@ Component debugger_ui::create_main_component() {
     auto source = create_source_view();
     auto variables = create_variables_view();
     auto callstack = create_callstack_view();
-    auto controls = create_controls();
+    auto info = create_info_view();
     
-    auto layout = Container::Vertical({
-        Container::Horizontal({
-            source,
-            Container::Vertical({
-                variables,
-                callstack,
-            }),
-        }),
-        controls,
+    auto side_panel = Container::Vertical({
+        variables,
+        callstack,
+        info,
+    });
+    
+    auto layout = Container::Horizontal({
+        source,
+        side_panel,
     });
     
     auto main_renderer = Renderer(layout, [&] {
-        return vbox({
-            hbox({
-                source->Render() | flex,
-                separator(),
-                vbox({
-                    variables->Render() | size(HEIGHT, LESS_THAN, 15),
-                    separator(),
-                    callstack->Render() | flex,
-                }) | size(WIDTH, EQUAL, 40),
-            }) | flex,
+        return hbox({
+            source->Render() | flex,
             separator(),
-            controls->Render(),
+            vbox({
+                variables->Render() | size(HEIGHT, LESS_THAN, 12),
+                separator(),
+                callstack->Render() | size(HEIGHT, LESS_THAN, 10),
+                separator(),
+                info->Render() | flex,
+            }) | size(WIDTH, EQUAL, 45),
         }) | border;
     });
     
     // Add keyboard shortcuts
     auto with_shortcuts = CatchEvent(main_renderer, [&](Event event) {
-        if (event == Event::F5) {
-            handle_continue();
+        if (event == Event::Character('q') || event == Event::Character('Q')) {
+            screen_.ExitLoopClosure()();
             return true;
-        } else if (event == Event::F10) {
-            handle_step_over();
-            return true;
-        } else if (event == Event::F11) {
-            handle_step_into();
-            return true;
-        } else if (event == Event::F12) {
-            handle_step_out();
-            return true;
-        } else if (event == Event::Character('q') || event == Event::Character('Q')) {
+        } else if (event == Event::Escape) {
             screen_.ExitLoopClosure()();
             return true;
         }
@@ -154,24 +156,4 @@ void debugger_ui::run() {
 
 void debugger_ui::update_display() {
     screen_.PostEvent(Event::Custom);
-}
-
-void debugger_ui::handle_continue() {
-    wren_->continue_execution();
-    update_display();
-}
-
-void debugger_ui::handle_step_over() {
-    wren_->step_over();
-    update_display();
-}
-
-void debugger_ui::handle_step_into() {
-    wren_->step_into();
-    update_display();
-}
-
-void debugger_ui::handle_step_out() {
-    wren_->step_out();
-    update_display();
 }
