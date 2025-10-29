@@ -37,12 +37,12 @@ cmake --build .
 
 ## Wren API
 
-Your Wren scripts can use these System methods:
+Your Wren scripts can use these IO methods:
 
-- `System.print(text)` - Print to output log
-- `System.input()` - Get keyboard input
-- `System.setPixel(x, y, on)` - Set pixel on 8x8 display
-- `System.clearDisplay()` - Clear the display
+- `IO.print(text)` - Print to output log
+- `IO.input()` - Get keyboard input
+- `IO.setPixel(x, y, on)` - Set pixel on 8x8 display
+- `IO.clearDisplay()` - Clear the display
 
 ## Example
 

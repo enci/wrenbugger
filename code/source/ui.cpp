@@ -11,7 +11,19 @@ using namespace ftxui;
 
 namespace wrenbugger
 {
-    debugger_ui::debugger_ui(wren_vm& vm) : vm(vm) {}
+    debugger_ui::debugger_ui(wren_vm& vm) : vm(vm) 
+    {
+        // Load source file
+        std::ifstream file(vm.get_current_module());
+        if(file.is_open())
+        {
+            std::string line;
+            while(std::getline(file, line))
+            {
+                source_lines.push_back(line);
+            }
+        }
+    }
     
     void debugger_ui::run()
     {

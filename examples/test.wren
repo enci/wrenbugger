@@ -1,4 +1,4 @@
-class System {
+class IO {
     foreign static setPixel(x, y, on)
     foreign static clearDisplay()
     foreign static input()
@@ -7,16 +7,16 @@ class System {
 
 class Main {
     static run() {
-        System.print("Wrenbugger demo - WASD to move, Q to quit")
+        IO.print("Wrenbugger demo - WASD to move, Q to quit")
         
         var x = 3
         var y = 3
         
         while (true) {
-            System.clearDisplay()
-            System.setPixel(x, y, true)
+            IO.clearDisplay()
+            IO.setPixel(x, y, true)
             
-            var key = System.input()
+            var key = IO.input()
             
             if (key == "w" && y > 0) y = y - 1
             if (key == "s" && y < 7) y = y + 1
@@ -24,10 +24,10 @@ class Main {
             if (key == "d" && x < 7) x = x + 1
             if (key == "q") break
             
-            System.print("Position: %(x), %(y)")
+            IO.print("Position: %(x), %(y)")
         }
         
-        System.print("Goodbye!")
+        IO.print("Goodbye!")
     }
 }
 

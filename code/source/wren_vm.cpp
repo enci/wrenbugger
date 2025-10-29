@@ -34,7 +34,7 @@ namespace wrenbugger
         bool isStatic,
         const char* signature)
     {
-        if (strcmp(module, "main") == 0 && strcmp(className, "System") == 0)
+        if (strcmp(module, "main") == 0 && strcmp(className, "IO") == 0)
         {
             if (isStatic && strcmp(signature, "setPixel(_,_,_)") == 0)
                 return system_set_pixel;
@@ -48,6 +48,17 @@ namespace wrenbugger
         return nullptr;
     }
 
+    static WrenForeignClassMethods bind_foreign_class(
+        WrenVM* vm,
+        const char* module,
+        const char* className)
+    {
+        WrenForeignClassMethods methods;
+        methods.allocate = nullptr;
+        methods.finalize = nullptr;
+        return methods;
+    }
+
     wren_vm::wren_vm()
     {
         WrenConfiguration config;
@@ -55,6 +66,7 @@ namespace wrenbugger
         config.writeFn = write_fn;
         config.errorFn = error_fn;
         config.bindForeignMethodFn = bind_foreign_method;
+        config.bindForeignClassFn = bind_foreign_class;
         
         vm = wrenNewVM(&config);
         wrenSetUserData(vm, this);
