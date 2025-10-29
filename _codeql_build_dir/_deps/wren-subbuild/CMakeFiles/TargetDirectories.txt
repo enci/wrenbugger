@@ -1,0 +1,3 @@
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/wren-populate.dir
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/edit_cache.dir
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/rebuild_cache.dir

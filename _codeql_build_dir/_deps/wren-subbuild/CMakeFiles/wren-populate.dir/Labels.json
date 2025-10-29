@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/wren-populate"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/wren-populate.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/wren-populate-complete.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-build.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-configure.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-download.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-install.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-mkdir.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-patch.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-test.rule"
+		},
+		{
+			"file" : "/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"wren-populate"
+		],
+		"name" : "wren-populate"
+	}
+}

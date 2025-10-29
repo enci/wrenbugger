@@ -1,0 +1,14 @@
+# Target labels
+ wren-populate
+# Source files and their labels
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/wren-populate
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/wren-populate.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/CMakeFiles/wren-populate-complete.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-build.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-configure.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-download.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-install.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-mkdir.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-patch.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-test.rule
+/home/runner/work/wrenbugger/wrenbugger/_codeql_build_dir/_deps/wren-subbuild/wren-populate-prefix/src/wren-populate-stamp/wren-populate-update.rule
