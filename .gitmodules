@@ -1,0 +1,7 @@
+[submodule "external/wren"]
+	path = external/wren
+	url = https://github.com/wren-lang/wren.git
+	branch = debugger
+[submodule "external/ftxui"]
+	path = external/ftxui
+	url = https://github.com/ArthurSonzogni/FTXUI.git
